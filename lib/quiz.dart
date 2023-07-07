@@ -1,9 +1,25 @@
 import 'package:flutter/material.dart';
+import 'package:quizly/questions.dart';
+
+import 'answers.dart';
 class Quiz extends StatelessWidget {
-  const Quiz({super.key});
+  final List<Map<String, Object>> questions ;
+  final int questionID;
+  final Function answerQuestion;
+   const Quiz(this.questions, this.questionID, this.answerQuestion, {super.key});
 
   @override
   Widget build(BuildContext context) {
-    return const Placeholder();
+    return Column(
+      children: [
+        Questions(
+         questions[questionID]['questionText'].toString(),
+        ),
+        ...(questions[questionID]['answersText'] as List<String>)
+            .map((answer) {
+          return Answers(answer, onAnswer: answerQuestion);
+        }).toList(),
+      ],
+    );
   }
 }

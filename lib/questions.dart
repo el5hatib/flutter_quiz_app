@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 class Questions extends StatelessWidget {
-  String questionText ;
-   Questions(this.questionText, {super.key});
+ final String questionText ;
+  const Questions(this.questionText, {super.key});
   @override
   Widget build(BuildContext context) {
     return Container(

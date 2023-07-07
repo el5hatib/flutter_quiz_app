@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:quizly/answers.dart';
-import 'package:quizly/questions.dart';
-void main ()=> runApp(MyApp());
+import 'package:quizly/quiz.dart';
+import 'package:quizly/result.dart';
+
+void main() => runApp(const MyApp());
+
 class MyApp extends StatefulWidget {
   const MyApp({super.key});
 
@@ -10,53 +12,47 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  int _questionID=0;
-  final _questions= [
+  int _questionID = 0;
+  final List<Map<String, Object>> _questions = [
     {
-      'questionText':"What's your Favourite Color ? ",
-      'answersText': ["Red","Green","Blue","Black"],
-    } ,
+      'questionText': "What's your Favourite Color ? ",
+      'answersText': ["Red", "Green", "Blue", "Black"],
+    },
     {
       'questionText': "What's your Favourite Animal ? ",
-      'answersText': ["Lion","Tiger","Elephant","Rabbit"],
+      'answersText': ["Lion", "Tiger", "Elephant", "Rabbit"],
     },
     {
       'questionText': "What's your Name ? ",
-      'answersText': ["Mohammed","Ahmed","Mostafa","Hamada","Saif"],
+      'answersText': ["Mohammed", "Ahmed", "Mostafa", "Hamada", "Saif"],
     }
-
   ];
-  void answerQuestion ()
+  void _startFromBeginning()
   {
-    if (_questionID==2)
-      {
-         _questionID=-1;
-      }
+    setState(() {
+      _questionID = 0;
+    });
+
+  }
+  void answerQuestion() {
     setState(() {
       _questionID++;
     });
-    print ("Answer Chosen !!");
-    print (_questionID);
   }
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(
-          title: const Center (
+          title: const Center(
             child: Text("Quize App"),
           ),
         ),
-        body: Column(
-            children: [
-              Questions(_questions[_questionID]['questionText'].toString(),),
-              ...(_questions[_questionID]['answersText'] as List<String> ).map((answer)
-              {
-                return Answers(answer,onAnswer:answerQuestion);
-              }).toList(),
-            ],
-          ),
-        ),
+        body: _questionID < _questions.length
+            ?  Quiz(_questions,_questionID,answerQuestion)
+            :  Result(startFromBeginning: _startFromBeginning,),
+              ),
       );
   }
 }
