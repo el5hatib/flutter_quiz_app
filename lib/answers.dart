@@ -1,9 +1,21 @@
 import 'package:flutter/material.dart';
+
 class Answers extends StatelessWidget {
-  const Answers({super.key});
+  String answerText ;
+  final Function onAnswer;
+   Answers(this.answerText, {super.key, required this.onAnswer});
 
   @override
   Widget build(BuildContext context) {
-    return const Placeholder();
+    return Container(
+      width: double.infinity,
+      child: ElevatedButton(
+        child: Text(
+          answerText,
+          style: const TextStyle(fontSize: 25),
+        ),
+        onPressed: ()=> onAnswer(),
+      ),
+    );
   }
 }

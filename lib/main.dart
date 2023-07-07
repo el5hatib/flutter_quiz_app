@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:quizly/answers.dart';
 import 'package:quizly/questions.dart';
 void main ()=> runApp(MyApp());
 class MyApp extends StatefulWidget {
@@ -9,13 +10,34 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  int _questionID=1;
+  int _questionID=0;
   final _questions= [
-    "What's your Favourite Color ? ",
-    "What's your Favourite Animal ? ",
-    "What's your Name ? ",
+    {
+      'questionText':"What's your Favourite Color ? ",
+      'answersText': ["Red","Green","Blue","Black"],
+    } ,
+    {
+      'questionText': "What's your Favourite Animal ? ",
+      'answersText': ["Lion","Tiger","Elephant","Rabbit"],
+    },
+    {
+      'questionText': "What's your Name ? ",
+      'answersText': ["Mohammed","Ahmed","Mostafa","Hamada","Saif"],
+    }
 
   ];
+  void answerQuestion ()
+  {
+    if (_questionID==2)
+      {
+         _questionID=-1;
+      }
+    setState(() {
+      _questionID++;
+    });
+    print ("Answer Chosen !!");
+    print (_questionID);
+  }
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -27,7 +49,11 @@ class _MyAppState extends State<MyApp> {
         ),
         body: Column(
             children: [
-              Questions(_questions[_questionID]),
+              Questions(_questions[_questionID]['questionText'].toString(),),
+              ...(_questions[_questionID]['answersText'] as List<String> ).map((answer)
+              {
+                return Answers(answer,onAnswer:answerQuestion);
+              }).toList(),
             ],
           ),
         ),
