@@ -22,7 +22,7 @@ class Result extends StatelessWidget {
                       color: Colors.lightGreen),
                 ),
                 Text(
-                  '$myScore',
+                  'You Get : $myScore',
                   style: const TextStyle(
                       fontSize: 40,
                       fontWeight: FontWeight.bold,
