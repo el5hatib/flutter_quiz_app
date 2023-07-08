@@ -12,8 +12,10 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
+  bool isSwitched = false;
+
   int _questionID = 0;
-  int _totalScor=0;
+  int _totalScor = 0;
   final List<Map<String, Object>> _questions = [
     {
       'questionText': "What's your Favourite Color ? ",
@@ -48,12 +50,12 @@ class _MyAppState extends State<MyApp> {
   void _startFromBeginning() {
     setState(() {
       _questionID = 0;
-      _totalScor=0;
+      _totalScor = 0;
     });
   }
 
   void answerQuestion(int score) {
-    _totalScor+=score ;
+    _totalScor += score;
     setState(() {
       _questionID++;
     });
@@ -63,16 +65,34 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
+      theme: isSwitched == false
+          ? ThemeData.light(
+              useMaterial3: true,
+            )
+          : ThemeData.dark(useMaterial3: true),
       home: Scaffold(
         appBar: AppBar(
           title: const Center(
             child: Text("Quiz App"),
           ),
+          actions: [
+            Switch(
+                value: isSwitched,
+                onChanged: (value) {
+                  setState(() {
+                    isSwitched = value;
+                  });
+                }),
+          ],
+          leading: isSwitched == false
+              ? Icon(Icons.sunny, color:Colors.yellow.shade700 )
+              :const Icon(Icons.dark_mode_outlined),
         ),
         body: _questionID < _questions.length
             ? Quiz(_questions, _questionID, answerQuestion)
             : Result(
-                startFromBeginning: _startFromBeginning, myScore: _totalScor,
+                startFromBeginning: _startFromBeginning,
+                myScore: _totalScor,
               ),
       ),
     );
