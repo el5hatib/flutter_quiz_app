@@ -1,6 +1,7 @@
 # quizly
 
-A Simple Quize App
+A Simple Quiz App Using Flutter and Dart 
+with a dark and light theme
 
 ## Getting Started
 
